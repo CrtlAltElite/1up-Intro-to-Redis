@@ -5,9 +5,14 @@
 </head>
 <body>
   <h1>Redis Caching with Flask</h1>
+  <h5>Hit Counter:<span id="count"></span></h5>
   <button id="fetch">Fetch Data - without redis cache</button>
   <button id="redis">Fetch Data - with redis cache</button>
-
+  <br>
+  <button id="list">Add items to list</button>
+  <button id="hashset">Add items to hashset</button>
+  <br>
+  <button id="flush">Flush Redis</button>
   <script>
     document.getElementById('redis').addEventListener('click', () => {
       fetch('/fast')
@@ -18,6 +23,25 @@
       fetch('/slow')
       .then(response => response.json())
       .then(data => alert(`Data: ${data.result}, Source: ${data.source}, time:${data.time}`));
+    });
+    document.getElementById('list').addEventListener('click', () => {
+      fetch('/lists')
+      .then(response => response.json())
+      .then(data => alert(data.join(', ')));
+    });
+    document.getElementById('hashset').addEventListener('click', () => {
+      fetch('/hashset')
+      .then(response => response.json())
+      .then(data => alert(`key is: ${data.value1} name is: ${data.value2}`));
+    });
+    document.getElementById('flush').addEventListener('click', () => {
+      fetch('/flush')
+      .then(response => alert(`flushed`))
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('/count')
+      .then(response => response.json())
+      .then(data => document.getElementById('count').innerHTML=data.pageviews);
     });
   </script>
 </body>
