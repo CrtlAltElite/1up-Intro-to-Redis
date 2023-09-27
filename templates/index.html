@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Intro to Redis with Flask</title>
+</head>
+<body>
+  <h1>Redis Caching with Flask</h1>
+  <button id="fetch">Fetch Data - without redis cache</button>
+  <button id="redis">Fetch Data - with redis cache</button>
+
+  <script>
+    document.getElementById('redis').addEventListener('click', () => {
+      fetch('/fast')
+      .then(response => response.json())
+      .then(data => alert(`Data: ${data.result}, Source: ${data.source}, time:${data.time}`));
+    });
+    document.getElementById('fetch').addEventListener('click', () => {
+      fetch('/slow')
+      .then(response => response.json())
+      .then(data => alert(`Data: ${data.result}, Source: ${data.source}, time:${data.time}`));
+    });
+  </script>
+</body>
+</html>
